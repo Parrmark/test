@@ -2,8 +2,8 @@
 	ob_start();
 	session_start();
 	require_once("./dbconfig.php");
-echo "1";
- 
+
+
 	if(isset($_SESSION['ID'])){
 	//$_GET['no']이 있어야만 글삭제가 가능함.
 	if(isset($_GET['no'])) {
