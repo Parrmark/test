@@ -1,0 +1,95 @@
+<?php
+	require_once("./dbconfig.php");
+
+	$BackURL = "./index.php";
+
+
+//	if(isset($_POST['no'])) {
+//		$No = $_POST['no'];
+//	}
+
+	if(isset($ID)) {
+		$sql = 'select title, content, id from table_board where id = ' . "'$ID'";
+		$result = $db->query($sql);
+		$row = $result->fetch_assoc();
+	}
+?>
+<script>
+	alert("<?php echo $ID . $Password . $No?>");
+</script>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Board_free | Youngjin</title>
+	<link rel="stylesheet" hrel="./css/normalize.css" />
+	<link rel="stylesheet" hrel="./css/board.css" />
+</head>
+<body>
+	<article class="boardArticle">
+		<h3>Board_free_write<h3>
+		<div id="boardWrite">
+			<form action="./write_update.php" method="post" enctype='multipart/form-data'>
+				<?php
+				if(isset($No)) {
+					echo '<input type="hidden" name="no" value="' . $No . '">';
+				}
+				?>
+				<table id="boardWrite">
+					<tbody>
+						<tr>
+							<th scope="row"><label for="ID">ID</label></th>
+							<td class="id">
+								<?php
+								if(isset($ID)) {
+									echo $row['id'];
+								} else { ?>
+								<input type="text" name="ID" id="ID">
+								<?php } ?>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="Password">Password</label></th>
+							<td class="password"><input type="hidden" name="Password" id="Password" value="<?=$Password;?>"></td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="Title">Title</label></th>
+							<td class="title"><input type="text" name="Title" id="Title"></td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="Content">Content</label></th>
+							<td class="content"><textarea name="Content" id="Content"><?php echo isset($row['content'])?$row['content']:null?></textarea></td>
+						</tr>
+					</tbody>
+				</table>
+				<div>
+				<input type='file' name='file_upload' id="file_upload">
+
+					</button>
+					<!--//파일업로드 버튼 파일선택부분-->
+				</div>
+				<div class="btnset">
+					<button type="submit" class="btnSubmit btn">
+						<?php echo isset($No)?'Modify':'Write'?>
+					</button>
+					<script>
+					function List() {
+					    //alert("myJsFunc");
+							history.back();
+					}
+					</script>
+					<a href="#" onclick="List();" class="btnList btn">List</a>
+				</div>
+			</form>
+		</div>
+	</article>
+<?php } else {
+	?>
+	<script>
+		alert("<?php echo '로그인 해주세요'?>");
+		history.back();
+	</script>
+	<?php
+}?>
+</body>
+</html>
